@@ -15,9 +15,13 @@ Etc.  What's important is that the right set of tests exist to ensure that the c
 
 Our default, somewhat-arbitrary initial goal for a library is 90% code coverage.  That doesn't mean we're done with testing once a library hits 90%, nor does it mean we must keep going with a library until it hits 90%.  We use this metric and the associated coverage information to help guide us towards the ideal for a given library.
 
+(Note that we do not want to arbitrarily inflate our code coverage numbers.  Tests must provide value in and of themselves and should not simply be written in a haphazard manner meant to execute more lines of code without providing real value.)
+
 ## Issues
 
 Issues are opened for a library when a cursory examination of its code coverage reveal that there are likely still some meaningful gaps that need to be addressed.  We welcome contributions to our test suites to help address these gaps and close these issues.  Many of these issues are marked as "up for grabs".
+
+An issue need not be addressed in its entirety.  We happily accept contributions that improve our tests and work towards improving code coverage numbers even if they only incrementally improve the situation.
 
 ## Automated Code Coverage Runs
 
@@ -53,4 +57,3 @@ The results for this one library will then also show up in the aforementioned in
 And then once the run completes:
     
     ..\..\..\bin\tests\coverage\index.htm
-
