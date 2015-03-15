@@ -41,7 +41,7 @@ To include code coverage in this run, augment it with the ```/p:Coverage=true```
 
 This will do the build and testing as with the normal ```build```, but it will run the tests using the OpenCover tool.  A resulting index.htm file providing the results of the run will be available at:
 
-   bin\tests\coverage\index.htm
+    bin\tests\coverage\index.htm
 
 You can also build and test with code coverage for a particular test project rather than for the whole repo.  Normally to build and test a particular test suite, from the same directory as that test suite's .csproj, you'd run:
 
