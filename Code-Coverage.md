@@ -4,6 +4,8 @@
 
 [![Coverage status](https://img.shields.io/badge/coverage-report-blue.svg)](http://dotnet-ci.cloudapp.net/job/dotnet_corefx_coverage_windows/lastBuild/Code_Coverage_Report/)]
 
+This report shows each library currently being tested with code coverage and provides statistics around the quality of the code coverage for the library.  It also provides a line-by-line breakdown of what lines are being covered and what lines are not.
+
 ## Goals
 
 The code coverage report provides a percentage value per library of the number of source lines exercised by the tests.  There is no hard and fast percentage that must be obtained per library, as every library is unique and comes with its own set of intricacies and constraints.  While in some cases it's possible and reasonable to achieve 100% code coverage, this is rare.  There are many valid reasons certain pieces of code won't be exercised in tests, e.g.:
