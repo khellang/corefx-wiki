@@ -11,6 +11,8 @@
     * [Definitions](Breaking Change Definitions)
     * [Rules](Breaking Change Rules)
  * [[Performance]]
+ * Testing
+    * [[Code Coverage]]
  * Code Organization
     * [[Cross Platform Code Guidelines]]
     * [[Structuring Interop Code]]
