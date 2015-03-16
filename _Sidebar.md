@@ -2,6 +2,7 @@
 * [[Developer Guide]]
     * [[Supported Operating Systems]]
  * [[Contributing]]
+ 	* [[Coding Style]]
     * [[Contribution License Agreement (CLA)]]
  * [[API Review Process]]
  * [[Framework Design Guidelines Digest]]
