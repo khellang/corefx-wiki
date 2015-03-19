@@ -1,17 +1,39 @@
-## General .NET Contributing Guide
+Contribution Workflow
+=====================
 
-1. Unless it is a trivial change, make sure that there is a corresponding issue for your change first. If there
-   is none, create one.
-2. If your change adds a new API, it's considered non-trivial. Make sure to follow the [[API Review Process]] for 
-   this change.
-3. Create a fork in GitHub
-4. Create a branch off the `master` branch. Name it something that that makes
-   sense, such as `issue-123` or `githubhandle-issue`. This makes it easy for everyone to figure out what
-   the branch is used for. It also makes it easier to isolate your change from incoming changes from the origin.
-5. Commit your changes and push your changes to GitHub
-6. Create a pull request against the origin's `master` branch
+We use and recommend the following workflow:
 
-## DOs and DON'Ts
+1. Create an issue for your work. 
+  - You can skip this step for trivial changes.
+  - Reuse an existing issue on the topic, if there is one.
+  - Get agreement from the team and the community that your proposed change is a good one.
+  - If your change adds a new API, follow the [[API Review Process]]. 
+  - Clearly state that you are going to take on implementing it, if that's the case. The issue filer and the implementer don't have to be the same person.
+2. Create a personal fork of the repository on GitHub (if you don't already have one).
+3. Create a branch off of master (`git checkout -b mybranch`). 
+  - Name the branch so that it clearly communicates your intentions, such as issue-123 or githubhandle-issue. 
+  - Branches are useful since they isolate your changes from incoming changes from upstream. They also enable you to create multiple PRs from the same fork.
+4. Make and commit your changes.
+  - Please following our commit messages guidance, below.
+5. Add new tests corresponding to your change, if applicable.
+6. Build the repository with your changes.
+  - Make sure that the builds are clean.
+  - Make sure that the tests are all passing, including your new tests.
+7. Create a pull request (PR) against the upstream repository's **master** branch.
+  - Push your changes to your fork on GitHub (if you haven't already).
+
+Note: It is OK for your PR to include a large number of commits. Once your change is accepted, you will be asked to squash your commits into one or some appropriately small number of commits before your PR is merged.
+
+Issues
+------
+If you are looking at getting your feet wet with some simple (but still beneficial) changes, check out our [Up for grabs issues](https://github.com/dotnet/corefx/labels/up for grabs). You do not need to file an issue for trivial changes (e.g. typo fixes). Just send us
+a PR if it's tiny.
+
+Don't feel obliged to follow every issue with a PR. Simply filing issues for problems you
+encounter is a great way to contribute too! 
+
+DOs and DON'Ts
+--------------
 
 * **DO** follow our coding style (see below)
 * **DO** include tests when adding new features. When fixing bugs, start with
@@ -22,136 +44,37 @@
 * **DON'T** surprise us with big pull requests. Instead, file an issue and start
   a discussion so we can agree on a direction before you invest a large amount
   of time.
-* **DON'T** commit code that you didn't write. If you find MIT or Apache 2 licensed code that you think is a good fit to add to .NET Core, file an issue and start a discussion before proceeding.
-* **DON'T** add API additions without filing an issue and discussing with us first.
+* **DON'T** commit code that you didn't write. If you find code that you think is a good fit to add to .NET Core, file an issue and start a discussion before proceeding.
+* **DON'T** submit PRs that alter licensing related files or headers. If you believe there's a problem with them, file an issue and we'll be happy to discuss it.
+* **DON'T** add API additions without filing an issue and discussing with us first. See [API Review Process](API Review Process).
 * **DON'T** submit API additions to any type that has shipped in the full .NET framework to the *master* branch. Instead, use the *future* branch. See [[Branching Guide]].
 
-## C# Coding Style
+Making a change
+===============
 
-The general rule we follow is "use Visual Studio defaults".
+There are several issues to keep in mind when making a change.
 
-1. We use [Allman style](http://en.wikipedia.org/wiki/Indent_style#Allman_style) braces, where each brace begins on a new line. A single line statement block can go without braces but the block must be properly indented on its own line and it must not be nested in other statement blocks that use braces (See issue [381](https://github.com/dotnet/corefx/issues/381) for examples). 
-2. We use four spaces of indentation (no tabs).
-3. We use `_camelCase` private members and use `readonly` where possible. Prefix instance fields with `_`, static fields with `s_` and thread static fields with `t_`. 
-4. We avoid `this.` unless absolutely necessary. 
-5. We always specify the visibility, even if it's the default (i.e.
-   `private string _foo` not `string _foo`).
-6. Namespace imports should be specified at the top of the file, *outside* of
-   `namespace` declarations and should be sorted alphabetically, with `System.
-   namespaces at the top and blank lines between different top level groups.
-7. Avoid more than one empty line at any time. For example, do not have two
-   blank lines between members of a type.
-8. Avoid spurious free spaces.
-   For example avoid `if (someVar == 0)...`, where the dots mark the spurious free spaces.
-   Consider enabling "View White Space (Ctrl+E, S)" if using Visual Studio, to aid detection.
-9. If a file happens to differ in style from these guidelines (e.g. private members are named `m_member`
-   rather than `_member`), the existing style in that file takes precedence.
-10. We only use `var` when it's obvious what the variable type is (i.e. `var stream = new FileStream(...)` not `var stream = OpenStandardInput()`).
-11. We use language keywords instead of BCL types (i.e. `int, string, float` instead of `Int32, String, Single`, etc) for both type references as well as method calls (i.e. `int.Parse` instead of `Int32.Parse`). See issue [391](https://github.com/dotnet/corefx/issues/391) for examples.
-12. We use PascalCasing to name all our constant local variables and fields. The only exception is for interop code where the constant value should exactly match the name and value of the code you are calling via interop.
+Compatibility
+-------------
+Please review [Breaking Changes](Breaking Changes) before making changes. Please pay the most attention to changes that affect the [Public Contract](https://github.com/dotnet/corefx/wiki/Breaking-Changes#bucket-1-public-contract).
 
-We have provided a Visual Studio 2013 vssettings file (`corefx.vssettings`) at the root of the corefx repository, enabling C# auto-formatting conforming to the above guidelines. Note that rules 7 and 8 are not covered by the vssettings, since these are not rules currently supported by VS formatting.
+Typos
+-----
+Typos are embarrassing! We will acept most PRs that fix typos. In order to make it easier to review your PR, please focus on a given component with your fixes or on one type of typo across the entire repository. If it's going to take 30 mins to review your PR, then we will probably ask you to chunk it up.
 
-We also use the [.NET Codeformatter Tool](https://github.com/dotnet/codeformatter) to ensure the code base maintains a consistent style over time, the tool automatically fixes the code base to conform to the guidelines outlined above.
+Coding Style Changes
+--------------------
 
-### Example File:
+We are striving to bring dotnet/corefx in to full conformance with the style guidelines
+described in [Coding Style](Coding-style). We plan to do that with tooling, in a holistic way. In the meantime, please:
 
-``ObservableLinkedList`1.cs:``
+* **DO NOT** send PRs for style changes. 
+* **DO** give priority to the current style of the project or file you're changing even if it
+diverges from the general guidelines.
 
-```C#
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Collections.Specialized;
-using System.ComponentModel;
-using System.Diagnostics;
+Commit Messages
+---------------
 
-using Microsoft.Win32;
-
-namespace System.Collections.Generic
-{
-    public partial class ObservableLinkedList<T> : INotifyCollectionChanged, INotifyPropertyChanged
-    {
-        private ObservableLinkedListNode<T> _head;
-        private int _count;
-
-        public ObservableLinkedList(IEnumerable<T> items)
-        {
-            if (items == null)
-                throw new ArgumentException("items");
-
-            foreach (T item in items)
-            {
-                AddLast(item);
-            }
-        }
-
-        public event NotifyCollectionChangedEventHandler CollectionChanged;
-
-        public int Count
-        {
-            get { return _count; }
-        }
-
-        public ObservableLinkedListNode AddLast(T value) 
-        {
-            var newNode = new LinkedListNode<T>(this, value);
-
-            InsertNodeBefore(_head, node);
-        }
-
-        protected virtual void OnCollectionChanged(NotifyCollectionChangedEventArgs e)
-        {
-            NotifyCollectionChangedEventHandler handler = CollectionChanged;
-            if (handler != null)
-            {
-                handler(this, e);
-            }
-        }
-
-        private void InsertNodeBefore(LinkedListNode<T> node, LinkedListNode<T> newNode)
-        {
-           ...
-        }
-        
-        ...
-    }
-}
-```
-
-``ObservableLinkedList`1.ObservableLinkedListNode.cs:``
-
-```C#
-using System;
-
-namespace System.Collections.Generics
-{
-    partial class ObservableLinkedList<T>
-    {
-        public class ObservableLinkedListNode
-        {
-            private readonly ObservableLinkedList<T> _parent;
-            private readonly T _value;
-
-            internal ObservableLinkedListNode(ObservableLinkedList<T> parent, T value)
-            {
-                Debug.Assert(parent != null);
-
-                _parent = parent;
-                _value = value;
-            }
-            
-            public T Value
-            {
-               get { return _value; }
-            }
-        }
-
-        ...
-    }
-}
-```
-### Commits 
 Please format commit messages as follows (based on this [excellent post](http://tbaggery.com/2008/04/19/a-note-about-git-commit-messages.html)):
 
 ```
@@ -173,34 +96,18 @@ times in N different commits. If there was some accidental reformatting or white
 changes during the course of your commits, please rebase them away before submitting
 the PR.
 
-### Issues
-If you are looking at getting your feet wet with some simple (but still beneficial) changes, check out our [Up for grabs issues](https://github.com/dotnet/corefx/labels/up for grabs).
+PR Feedback
+===========
 
-You do not need to file an issue for trivial changes (e.g. typo fixes). Just send us
-a PR if it's tiny.
+Team and community members will provide feedback on your change. Community feedback is highly valued. You will often see the absence of team feedback if the community has already provided good review feedback. 
 
-If an issue is complex, consider filing it and giving us time to respond before sending a
-corresponding PR. If you want to work on the issue, just let it be known on the issue thread. Giving
-us a chance to review the issue will help save time. For example, we might let you know why existing
-behavior can't be changed or about particular implementation constraints you need to keep in mind, etc.
+Based on the size and impact of the change, and your history with the .NET Core community, 1-2 core members will review every PR prior to merge.
 
-Don't feel obliged to match every issue with a PR. Simply filing issues for problems you
-encounter is a great way to contribute too! 
+PR - CI Process
+---------------
 
-### Style
-We are striving to bring dotnet/corefx in to full conformance with the style guidelines
-described above. We have built some automation for that and will work to bring everything
-in line. In the meantime, please:
+The [dotnet continuous integration](http://dotnet-ci.cloudapp.net/) (CI) system will automatically perform the required builds and run tests (including the ones you are expected to run) for PRs. Builds and test runs must be clean.
 
-* **DO NOT** send PRs for style changes. We'd rather handle them holistically and they are tough
-to review and merge.
+If the CI build fails for any reason, the PR issue will be updated with a link that can be used to determine the cause of the failure.
 
-* **DO** give priority to the current style of the project or file you're changing even if it
-diverges from the general guidelines.
-
-### Licensing
-* **DO NOT** submit PRs that alter licensing related files or headers. If you believe there's a
-problem with them, file an issue and let us take care of it.
-
-### Compatibility
-Please review the page about [Breaking Changes](Breaking Changes) before making changes.
+There is currently minimal test coverage for Linux and Mac OS X builds that can be used by the dotnet CI. We are working to improve that so that more issues can be caught in CI, as is the case with Windows.
