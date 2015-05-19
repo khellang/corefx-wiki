@@ -20,7 +20,7 @@ the Visual Studio IDE.
 
 ## Tests
 
-We use the OSS testing framework [xunit|http://xunit.github.io/]
+We use the OSS testing framework [xunit](http://xunit.github.io/)
 
 ### Running tests on the command line
 
@@ -29,6 +29,7 @@ the command line is as simple as invoking `build.cmd`.
 
 You can also run the test for an individual project by building just one test
 project, e.g.:
+
 ```
 cd src\System.Collections.Immutable\tests
 msbuild /t:BuildAndTest (or /t:Test to just re-run the tests)
